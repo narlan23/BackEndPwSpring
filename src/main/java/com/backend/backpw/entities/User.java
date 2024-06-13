@@ -2,6 +2,7 @@ package com.backend.backpw.entities;
 
 import java.util.Date;
 
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
