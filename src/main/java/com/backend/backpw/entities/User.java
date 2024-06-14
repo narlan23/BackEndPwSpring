@@ -2,7 +2,6 @@ package com.backend.backpw.entities;
 
 import java.util.Date;
 
-
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
@@ -34,6 +33,8 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date creatime;
+
+
     
     public User() {
     	
