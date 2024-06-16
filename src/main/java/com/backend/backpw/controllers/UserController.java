@@ -18,8 +18,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam String login, @RequestParam String passwd, @RequestParam String repasswd, @RequestParam String email) {
-        return userService.registerUser(login, passwd, repasswd, email);
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        // Lógica de validação e criação do usuário
+        return ResponseEntity.ok(userService.registerUser(user.getName(), user.getPasswd(), user.getPasswd(), user.getEmail()));
     }
     
     @GetMapping("/all")
@@ -27,4 +28,6 @@ public class UserController {
     	List<User> usuarios = userService.listarTodosUsuario();
         return ResponseEntity.ok(usuarios);
     }
+    
+    
 }

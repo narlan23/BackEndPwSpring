@@ -24,6 +24,11 @@ public class PwAPIController {
         return pwAPIService.consultarDados(userId, function);
     }
     
+    @GetMapping("/server-status")
+    public Mono<String> consultarServerStatus() {
+        return pwAPIService.consultarServerStatus();
+    }
+    
     
 }
 

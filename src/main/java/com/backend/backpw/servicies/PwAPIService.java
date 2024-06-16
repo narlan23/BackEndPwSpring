@@ -26,4 +26,16 @@ public class PwAPIService {
                 .retrieve()
                 .bodyToMono(String.class);
     }
+    
+    public Mono<String> consultarServerStatus() {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/index.php")
+                        .queryParam("function", "server-status")
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class)
+                .doOnNext(response -> System.out.println("Response: " + response))  // Adiciona um log da resposta
+                .doOnError(error -> System.out.println("Error: " + error.getMessage()));  // Adiciona um log de erro
+    }
 }
