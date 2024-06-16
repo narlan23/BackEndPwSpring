@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import com.backend.backpw.dto.UserDTO;
 import com.backend.backpw.entities.User;
 import com.backend.backpw.repositories.UserRepository;
 
@@ -17,9 +18,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String registerUser(String login, String pass, String repass, String email) {
+    public String registerUser(UserDTO userDTO) {
+    	
+    	// Validar os dados de entrada
+        String login = userDTO.getName();
+        String pass = userDTO.getPasswd();
+        String repass = userDTO.getPasswd2();
+        String email = userDTO.getEmail();
+        String truename = userDTO.getTruename();
+        
         if (login.isEmpty() || pass.isEmpty() || repass.isEmpty() || email.isEmpty()) {
-            return "Todos os campos estão preenchidos incorretamente!";
+            return "Todos os campos devem ser preenchidos!";
         }
 
         if (email.contains("'")) {
@@ -27,7 +36,7 @@ public class UserService {
         }
 
         if (login.length() < 4 || login.length() > 10) {
-            return "O login deve conter no mínimo 4 e no máximo 10 caracteres.";
+            return "O login deve conter entre 4 e 10 caracteres.";
         }
 
         User existingUserByName = userRepository.findByName(login);
@@ -60,8 +69,10 @@ public class UserService {
             return "Erro ao gerar o hash da senha";
         }
 
+        // Criar usuário e salvar no banco de dados
         User user = new User();
         user.setName(login);
+        user.setTruename(truename); // Incluir o true name no usuário
         user.setPasswd(salt);
         user.setEmail(email);
         userRepository.save(user);
