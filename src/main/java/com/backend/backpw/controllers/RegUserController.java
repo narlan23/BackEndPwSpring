@@ -10,22 +10,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.backpw.dto.UserDTO;
 import com.backend.backpw.reponse.ErrorResponse;
+import com.backend.backpw.reponse.SuccessResponse;
 import com.backend.backpw.servicies.UserService;
 
 @RestController
 @RequestMapping("/api")
 public class RegUserController {
-	
-	@Autowired
+
+    @Autowired
     private UserService userService;
 
-	@PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
         String response = userService.registerUser(userDTO);
-        if (response.startsWith("Erro")) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(response));
+        if (response.startsWith("Conta")) {
+            return ResponseEntity.ok(new SuccessResponse(response));
         } else {
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(response));
         }
     }
 }
