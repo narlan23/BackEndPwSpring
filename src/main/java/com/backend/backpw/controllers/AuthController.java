@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.backpw.dto.LoginForm;
 import com.backend.backpw.entities.User;
+import com.backend.backpw.reponse.ErrorResponse;
+import com.backend.backpw.reponse.SuccessResponse;
 import com.backend.backpw.servicies.AuthService;
 
 @RestController
@@ -26,9 +28,9 @@ public class AuthController {
 
         if (authenticatedUser != null) {
             // Lógica para gerar token JWT ou retornar sucesso
-            return ResponseEntity.ok("Login realizado com sucesso!");
+            return ResponseEntity.ok(new SuccessResponse("Login realizado com sucesso!"));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidos");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("Usuário ou senha inválidos"));
         }
     }
 
